@@ -9,6 +9,7 @@ from .baseapi import GET
 from .Droplet import Droplet
 from .Region import Region
 from .Size import Size
+from .Tag import Tag
 from .Image import Image
 from .Domain import Domain
 from .SSHKey import SSHKey
@@ -100,6 +101,18 @@ class Manager(BaseAPI):
             size.token = self.token
             sizes.append(size)
         return sizes
+
+    def get_all_tags(self):
+        """
+            This function returns a list of Tag object.
+        """
+        data = self.get_data("tags/")
+        tags = list()
+        for jsoned in data['tags']:
+            tag = Tag(**jsoned)
+            tag.token = self.token
+            tags.append(tag)
+        return tags
 
     def get_images(self, private=False, type=None):
         """
